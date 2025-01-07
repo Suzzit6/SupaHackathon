@@ -103,7 +103,7 @@ export default function DashboardPage() {
           <div>
             <h1 className="text-2xl font-semibold text-white">Overview</h1>
             <p className="text-sm text-gray-400">
-              Analytics for January 2, 2024
+              Analytics for January 9, 2024
             </p>
           </div>
 

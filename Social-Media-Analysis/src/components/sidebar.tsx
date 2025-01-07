@@ -1,10 +1,16 @@
-import Link from "next/link"
-import { BarChart3, Users2, Zap, FileText, Settings, LayoutDashboard } from 'lucide-react'
+import Link from "next/link";
+import {
+  BarChart3,
+  Users2,
+  Zap,
+  FileText,
+  Settings,
+  LayoutDashboard,
+  MessageCircle,
+} from "lucide-react";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-
-//interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 export function Sidebar() {
   return (
@@ -62,10 +68,16 @@ export function Sidebar() {
               <Settings className="mr-2 h-4 w-4" />
               Settings
             </Button>
+            <Button
+              variant="ghost"
+              className="w-full justify-start text-gray-400 hover:bg-gray-800 hover:text-white"
+            >
+              <MessageCircle className="mr-2 h-4 w-4" />
+              Chat with AI
+            </Button>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
-
