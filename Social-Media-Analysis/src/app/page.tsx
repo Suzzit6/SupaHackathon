@@ -18,8 +18,8 @@ const LandingPage = () => {
         <HowItWorks />
         <MetricsDashboard />
         <AiChatbot
-          websocketUrl="ws://localhost:3000"
-          apiUrl="http://localhost:3000/chat"
+          websocketUrl="https://supahackathon.onrender.com"
+          apiUrl="https://supahackathon.onrender.com/chat"
           position="bottom-right"
           title="Name of our AI Assistant"
         />
