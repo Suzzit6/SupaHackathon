@@ -6,6 +6,7 @@ import HowItWorks from "@/components/HowItWorks";
 import MetricsDashboard from "@/components/MetricsDashboard";
 import FAQAndFooter from "@/components/FAQAndFooter";
 import Header from "@/components/Header";
+import { AiChatbot } from "@/components/ChatBot/ChatBot";
 
 const LandingPage = () => {
   return (
@@ -16,6 +17,12 @@ const LandingPage = () => {
         <AnalyticsFeaturesSection />
         <HowItWorks />
         <MetricsDashboard />
+        <AiChatbot
+          websocketUrl="ws://localhost:3000"
+          apiUrl="http://localhost:3000/chat"
+          position="bottom-right"
+          title="Name of our AI Assistant"
+        />
 
         <FAQAndFooter />
       </main>
