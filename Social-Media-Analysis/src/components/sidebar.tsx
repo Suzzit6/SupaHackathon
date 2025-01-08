@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import logo from "../../public/logo.jpg";
 import {
   BarChart3,
   Users2,
@@ -18,9 +20,9 @@ export function Sidebar() {
       <div className="space-y-4 py-4">
         <div className="px-4 py-2">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded bg-gray-800" />
+            <Image src={logo} alt="" className="w-7 h-auto rounded-lg" />
             <h2 className="text-lg font-semibold text-white tracking-tight">
-              Analytics
+              SocialStats
             </h2>
           </div>
         </div>
