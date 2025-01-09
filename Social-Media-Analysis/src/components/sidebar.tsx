@@ -81,7 +81,10 @@ export function Sidebar({ onChatbotToggle }: SidebarProps) {
             <Button
               variant="ghost"
               className="w-full justify-start text-gray-400 hover:bg-gray-800 hover:text-white"
-              onClick={onChatbotToggle} // Call the handler
+              onClick={() => {
+                console.log("Chat with AI button clicked"); // Debugging
+                onChatbotToggle();
+              }}
             >
               <MessageCircle className="mr-2 h-4 w-4" />
               Chat with AI

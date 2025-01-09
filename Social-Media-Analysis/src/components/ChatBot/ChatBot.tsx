@@ -1,31 +1,31 @@
 "use client";
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Send, Loader2, MessageSquare, X } from 'lucide-react';
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { Send, Loader2, MessageSquare, X } from "lucide-react";
 
 interface Message {
   text: string;
-  type: 'user' | 'response';
+  type: "user" | "response";
 }
 
 interface ChatbotProps {
   websocketUrl: string;
   apiUrl: string;
-  position?: 'bottom-right' | 'bottom-left';
+  position?: "bottom-right" | "bottom-left";
   title?: string;
-  isOpen: boolean; // Add this prop
-  onClose: () => void; // Add this prop
+  isOpen: boolean;
+  onClose: () => void; // This will now toggle the state
 }
 
 export const AiChatbot: React.FC<ChatbotProps> = ({
   websocketUrl,
   apiUrl,
-  position = 'bottom-right',
-  title = 'AI Assistant',
-  isOpen, // Receive isOpen from parent
-  onClose, // Receive onClose from parent
+  position = "bottom-right",
+  title = "AI Assistant",
+  isOpen,
+  onClose,
 }) => {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [inputMessage, setInputMessage] = useState('');
+  const [inputMessage, setInputMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -34,7 +34,7 @@ export const AiChatbot: React.FC<ChatbotProps> = ({
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
@@ -91,7 +91,7 @@ export const AiChatbot: React.FC<ChatbotProps> = ({
   }, [inputMessage, requestId, isLoading, apiUrl]);
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       sendMessage();
     }
@@ -101,9 +101,9 @@ export const AiChatbot: React.FC<ChatbotProps> = ({
     <>
       {/* Chat Toggle Button */}
       <button
-        onClick={() => onClose()} // Use onClose from props
+        onClick={onClose} // Use onClose to toggle the state
         className={`fixed ${
-          position === 'bottom-right' ? 'right-4' : 'left-4'
+          position === "bottom-right" ? "right-4" : "left-4"
         } bottom-4 p-4 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 z-50`}
       >
         <MessageSquare size={24} />
@@ -112,16 +112,16 @@ export const AiChatbot: React.FC<ChatbotProps> = ({
       {/* Chat Window */}
       <div
         className={`fixed ${
-          position === 'bottom-right' ? 'right-4' : 'left-4'
+          position === "bottom-right" ? "right-4" : "left-4"
         } bottom-20 w-96 max-w-[calc(100vw-2rem)] bg-white rounded-lg shadow-xl transition-all duration-300 transform ${
-          isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0 pointer-events-none'
+          isOpen ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none"
         } z-50`}
       >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b">
           <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
           <button
-            onClick={onClose} // Use onClose from props
+            onClick={onClose} // Use onClose to toggle the state
             className="p-1 hover:bg-gray-100 rounded-full transition-colors"
           >
             <X size={20} />
@@ -134,14 +134,14 @@ export const AiChatbot: React.FC<ChatbotProps> = ({
             <div
               key={index}
               className={`flex ${
-                message.type === 'user' ? 'justify-end' : 'justify-start'
+                message.type === "user" ? "justify-end" : "justify-start"
               }`}
             >
               <div
                 className={`max-w-[80%] p-3 rounded-lg ${
-                  message.type === 'user'
-                    ? 'bg-blue-600 text-white rounded-br-none'
-                    : 'bg-gray-100 text-gray-800 rounded-bl-none'
+                  message.type === "user"
+                    ? "bg-blue-600 text-white rounded-br-none"
+                    : "bg-gray-100 text-gray-800 rounded-bl-none"
                 } animate-fade-in`}
               >
                 {message.text}
