@@ -5,8 +5,9 @@ import AnalyticsFeaturesSection from "@/components/AnalyticsFeaturesSection";
 import HowItWorks from "@/components/HowItWorks";
 import MetricsDashboard from "@/components/MetricsDashboard";
 import FAQAndFooter from "@/components/FAQAndFooter";
-import Header from "@/components/Header";
+import {Header} from "@/components/Header";
 import { AiChatbot } from "@/components/ChatBot/ChatBot";
+import TeamSection from "@/components/TeamSection";
 
 const LandingPage = () => {
   return (
@@ -14,17 +15,19 @@ const LandingPage = () => {
       <Header />
       <main>
         <HeroSection />
-        <AnalyticsFeaturesSection />
-        <HowItWorks />
-        <MetricsDashboard />
+        <AnalyticsFeaturesSection id="features" /> {/* Add id */}
+        <HowItWorks id="how-it-works" /> {/* Add id */}
+        <MetricsDashboard id="metrics" /> {/* Add id */}
+        <TeamSection id="team" /> {/* Add id */}
+        <FAQAndFooter id="faq" /> {/* Add id */}
         <AiChatbot
           websocketUrl="https://supahackathon.onrender.com"
           apiUrl="https://supahackathon.onrender.com/chat"
           position="bottom-right"
           title="Name of our AI Assistant"
+          isOpen={false}
+          onClose={() => {}}
         />
-
-        <FAQAndFooter />
       </main>
     </div>
   );

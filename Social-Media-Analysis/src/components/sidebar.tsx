@@ -1,4 +1,4 @@
-import Link from "next/link";
+"use client"
 import Image from "next/image";
 import logo from "../../public/logo.jpg";
 import {
@@ -6,7 +6,6 @@ import {
   Users2,
   Zap,
   FileText,
-  Settings,
   LayoutDashboard,
   MessageCircle,
 } from "lucide-react";
@@ -14,7 +13,18 @@ import {
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
-export function Sidebar() {
+interface SidebarProps {
+  onChatbotToggle: () => void; // Add this prop
+}
+
+export function Sidebar({ onChatbotToggle }: SidebarProps) {
+  const handleScroll = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div className={cn("pb-12 min-h-screen w-60 bg-gray-900")}>
       <div className="space-y-4 py-4">
@@ -31,6 +41,7 @@ export function Sidebar() {
             <Button
               variant="ghost"
               className="w-full justify-start text-white hover:bg-gray-800"
+              onClick={() => handleScroll("overview")}
             >
               <LayoutDashboard className="mr-2 h-4 w-4" />
               Overview
@@ -38,6 +49,7 @@ export function Sidebar() {
             <Button
               variant="ghost"
               className="w-full justify-start text-gray-400 hover:bg-gray-800 hover:text-white"
+              onClick={() => handleScroll("engagement")}
             >
               <Zap className="mr-2 h-4 w-4" />
               Engagement
@@ -45,6 +57,7 @@ export function Sidebar() {
             <Button
               variant="ghost"
               className="w-full justify-start text-gray-400 hover:bg-gray-800 hover:text-white"
+              onClick={() => handleScroll("demographics")}
             >
               <Users2 className="mr-2 h-4 w-4" />
               Demographics
@@ -52,6 +65,7 @@ export function Sidebar() {
             <Button
               variant="ghost"
               className="w-full justify-start text-gray-400 hover:bg-gray-800 hover:text-white"
+              onClick={() => handleScroll("performance")}
             >
               <BarChart3 className="mr-2 h-4 w-4" />
               Performance
@@ -59,6 +73,7 @@ export function Sidebar() {
             <Button
               variant="ghost"
               className="w-full justify-start text-gray-400 hover:bg-gray-800 hover:text-white"
+              onClick={() => handleScroll("posts")}
             >
               <FileText className="mr-2 h-4 w-4" />
               Posts
@@ -66,13 +81,7 @@ export function Sidebar() {
             <Button
               variant="ghost"
               className="w-full justify-start text-gray-400 hover:bg-gray-800 hover:text-white"
-            >
-              <Settings className="mr-2 h-4 w-4" />
-              Settings
-            </Button>
-            <Button
-              variant="ghost"
-              className="w-full justify-start text-gray-400 hover:bg-gray-800 hover:text-white"
+              onClick={onChatbotToggle} // Call the handler
             >
               <MessageCircle className="mr-2 h-4 w-4" />
               Chat with AI

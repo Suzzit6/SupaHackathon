@@ -1,3 +1,4 @@
+"use client";
 import { Sidebar } from "@/components/sidebar";
 import { MetricCard } from "@/components/metric-card";
 import { BarChart } from "@/components/bar-chart";
@@ -7,48 +8,49 @@ import { DevicePerformance } from "../../components/device-performance";
 import { EngagementAnalysis } from "@/components/engagement-analysis";
 import { OptimalPostingTimes } from "@/components/optimal-posting-times";
 import { DetailedMetrics } from "@/components/detailed-metrics";
+import data from "../../../public/data.json"; // Import data.json
+import { useState } from "react";
+import { AiChatbot } from "@/components/ChatBot/ChatBot";
 
 export default function DashboardPage() {
+  const [isChatbotOpen, setIsChatbotOpen] = useState(false); // State to control chatbot visibility
+
   const metrics = [
-    { title: "Total Reach", value: "2,300", change: 12 },
-    { title: "Impressions", value: "2,488", change: 8 },
-    { title: "Engagement Rate", value: "5.43%", change: 2.1 },
-    { title: "Click Through Rate", value: "3.46%", change: -1.2 },
-  ];
-  const timeSeriesData = [
-    { date: "1", value: 65 },
-    { date: "2", value: 35 },
-    { date: "3", value: 45 },
-    { date: "4", value: 85 },
-    { date: "5", value: 35 },
-    { date: "6", value: 65 },
-    { date: "7", value: 45 },
+    { title: "Total Reach", value: data[0].Overall_Reach, change: 12 },
+    { title: "Impressions", value: data[0].Impressions, change: 8 },
+    {
+      title: "Engagement Rate",
+      value: `${data[0].Engagement_Rate}%`,
+      change: 2.1,
+    },
+    { title: "Click Through Rate", value: `${data[0].CTR}%`, change: -1.2 },
   ];
 
   const engagementData = [
-    { label: "Likes", value: 69, color: "bg-pink-500" },
-    { label: "Comments", value: 10, color: "bg-blue-500" },
-    { label: "Saves", value: 29, color: "bg-yellow-500" },
-    { label: "Shares", value: 17, color: "bg-green-500" },
+    { label: "Likes", value: data[0].Likes, color: "bg-pink-500" },
+    { label: "Comments", value: data[0].Comments, color: "bg-blue-500" },
+    { label: "Saves", value: data[0].Saves, color: "bg-yellow-500" },
+    { label: "Shares", value: data[0].Shares, color: "bg-green-500" },
   ];
 
   const demographicsData = {
     genderData: {
-      male: 47,
-      female: 54,
+      male: data[0].Audience_Gender.Male,
+      female: data[0].Audience_Gender.Female,
     },
-    ageData: [
-      { label: "18-24", percentage: 26 },
-      { label: "25-34", percentage: 26 },
-      { label: "35-44", percentage: 22 },
-    ],
+    ageData: Object.entries(data[0].Audience_Age_Groups).map(
+      ([label, percentage]) => ({
+        label,
+        percentage,
+      })
+    ),
   };
 
   const engagementMetrics = [
-    { label: "Total Likes", value: 69 },
-    { label: "Comments", value: 10 },
-    { label: "Saves", value: 29 },
-    { label: "Shares", value: 17 },
+    { label: "Total Likes", value: data[0].Likes },
+    { label: "Comments", value: data[0].Comments },
+    { label: "Saves", value: data[0].Saves },
+    { label: "Shares", value: data[0].Shares },
   ];
 
   const postingTimeData = [
@@ -89,31 +91,37 @@ export default function DashboardPage() {
   ];
 
   const detailedMetrics = [
-    { name: "Likes", value: 69, change: 12 },
-    { name: "Comments", value: 10, change: 5 },
-    { name: "Saves", value: 29, change: 8 },
-    { name: "Shares", value: 17, change: -2 },
+    { name: "Likes", value: data[0].Likes, change: 12 },
+    { name: "Comments", value: data[0].Comments, change: 5 },
+    { name: "Saves", value: data[0].Saves, change: 8 },
+    { name: "Shares", value: data[0].Shares, change: -2 },
   ];
 
   return (
     <div className="flex min-h-screen bg-gray-950">
-      <Sidebar />
+      <Sidebar onChatbotToggle={() => setIsChatbotOpen((prev) => !prev)} />
       <main className="flex-1 p-8">
         <div className="max-w-6xl mx-auto space-y-8">
           <div>
             <h1 className="text-2xl font-semibold text-white">Overview</h1>
             <p className="text-sm text-gray-400">
-              Analytics for January 9, 2024
+              Analytics for {new Date(data[0].Post_Date).toLocaleDateString()}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {metrics.map((metric) => (
-              <MetricCard key={metric.title} {...metric} />
+              <MetricCard
+                key={metric.title}
+                {...metric}
+              />
             ))}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div
+            id="engagement"
+            className="grid grid-cols-1 lg:grid-cols-2 gap-4"
+          >
             <div className="rounded-lg bg-gray-900 border border-gray-800 p-6">
               <h3 className="text-lg font-semibold text-white mb-4">
                 Engagement Breakdown
@@ -128,21 +136,43 @@ export default function DashboardPage() {
                 ))}
               </div>
             </div>
-            <Demographics {...demographicsData} />
+            <div id="demographics">
+              <Demographics {...demographicsData} />
+            </div>
           </div>
-          <OptimalPostingTimes timeSlots={optimalTimes} />
+          <div id="performance">
+            <OptimalPostingTimes timeSlots={optimalTimes} />
+          </div>
           <EngagementAnalysis
-            timeSeriesData={timeSeriesData}
-            currentRate="5.43%"
+            timeSeriesData={postingTimeData.map((item) => ({
+              date: item.day,
+              value: item.value,
+            }))}
+            currentRate={`${data[0].Engagement_Rate}%`}
             metrics={engagementMetrics}
           />
-          <DetailedMetrics metrics={detailedMetrics} />
+          <div id="posts">
+            <DetailedMetrics metrics={detailedMetrics} />
+          </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <PostingTimeChart data={postingTimeData} />
-            <DevicePerformance primaryDevice="Desktop" percentage={75} />
+            <DevicePerformance
+              primaryDevice={data[0].Device}
+              percentage={75}
+            />
           </div>
         </div>
       </main>
+
+      {/* Render AiChatbot */}
+      <AiChatbot
+        websocketUrl="https://supahackathon.onrender.com"
+        apiUrl="https://supahackathon.onrender.com/chat"
+        position="bottom-right"
+        title="Name of our AI Assistant"
+        isOpen={isChatbotOpen} // Pass the state
+        onClose={() => setIsChatbotOpen(false)} // Pass the close handler
+      />
     </div>
   );
 }
