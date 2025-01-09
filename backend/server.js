@@ -30,6 +30,10 @@ app.use(express.json());
 
 const connections = new Map();
 
+function removeAsterisks(text) {
+    return text.replace(/\*\*/g, '');
+}
+
 wss.on("connection", (ws) => {
   const requestId = Math.random().toString(36).substring(7);
   connections.set(requestId, ws);
@@ -79,11 +83,12 @@ app.post("/chat", async (req, res) => {
       }
     );
 
-    const message = response.data.outputs[0].outputs[0].results.message.text;
-    console.log("Response:", message);
-
-    ws.send(JSON.stringify({ type: "response", message }));
-    return res.json({ message });
+      const rawMessage = response.data.outputs[0].outputs[0].results.message.text;
+        const cleanedMessage = removeAsterisks(rawMessage);
+       
+        ws.send(JSON.stringify({ type: 'response', message: cleanedMessage }));
+        
+        return res.json({ message: cleanedMessage });
   } catch (error) {
     ws.send(JSON.stringify({ type: "error", message: error.message }));
     res.status(500).json({ error: error.message });
