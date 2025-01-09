@@ -2,6 +2,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
+import { Github } from "lucide-react"; // Import the Github icon
 
 interface MetricCardProps {
   title: string;
@@ -46,6 +47,11 @@ const HeroSection = () => {
     window.open("https://youtu.be/7-7wMHZOAyA", "_blank");
   };
 
+  const handleOpenGitHub = () => {
+    // Open the GitHub link in a new tab
+    window.open("https://github.com/dmelloaries/SupaHackathon", "_blank");
+  };
+
   return (
     <div className="relative bg-gradient-to-br from-black to-zinc-900">
       <div className="max-w-7xl mx-auto px-8 py-24">
@@ -72,6 +78,12 @@ const HeroSection = () => {
                 onClick={handleWatchDemo} // Add onClick handler for Watch Demo
               >
                 Watch Demo
+              </button>
+              <button
+                className="flex items-center gap-2 border border-purple-600 text-white px-6 py-3 rounded-lg text-lg font-medium hover:bg-purple-600/10 hover:shadow-lg hover:shadow-purple-500/20 transition-all duration-300 ease-in-out transform hover:scale-105"
+                onClick={handleOpenGitHub} // Add onClick handler for GitHub
+              >
+                <Github size={20} /> {/* Add GitHub icon */}
               </button>
             </div>
             <div className="flex gap-8">
