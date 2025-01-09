@@ -107,7 +107,9 @@ export default function DashboardPage() {
   return (
     <div className="flex min-h-screen bg-gray-950">
       {/* Pass the toggle handler to Sidebar */}
-      <Sidebar onChatbotToggle={toggleChatbot} />
+      <Sidebar onChatbotToggle={toggleChatbot} isOpen={false} onClose={function (): void {
+        throw new Error("Function not implemented.");
+      } } />
       <main className="flex-1 p-8">
         <div className="max-w-6xl mx-auto space-y-8">
           <div>
