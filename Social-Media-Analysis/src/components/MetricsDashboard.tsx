@@ -1,16 +1,30 @@
-'use client';
+"use client";
 import React from "react";
 import { Card } from "@/components/ui/card";
-import { Area, AreaChart, ResponsiveContainer } from "recharts";
+import {
+  Area,
+  AreaChart,
+  ResponsiveContainer,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+} from "recharts";
 import { ArrowRight } from "lucide-react";
 
 const MetricsDashboard = () => {
-  // Sample data for the charts
+  // Generate realistic data
   const generateChartData = (baseValue = 50) => {
-    return Array.from({ length: 30 }, (_, i) => ({
-      date: i,
-      value: baseValue + Math.sin(i / 5) * 10 + i / 2,
-    }));
+    return Array.from({ length: 30 }, (_, i) => {
+      const fluctuation = Math.random() * 10 - 5; // Random fluctuations
+      const trend = i * 0.5; // Gradual trend
+      const seasonality = i % 7 === 0 ? 15 : 0; // Weekly spikes
+
+      return {
+        date: i,
+        value: baseValue + fluctuation + trend + seasonality,
+      };
+    });
   };
 
   const metrics = [
@@ -49,7 +63,10 @@ const MetricsDashboard = () => {
   ];
 
   return (
-    <div className="w-full bg-gray-50 py-16 px-4">
+    <div
+      id="metrics"
+      className="w-full bg-gray-50 py-16 px-4"
+    >
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4">Metrics That Matter</h2>
@@ -62,7 +79,7 @@ const MetricsDashboard = () => {
           {metrics.map((metric, index) => (
             <Card
               key={index}
-              className="p-6 bg-white"
+              className="p-6 bg-white hover:shadow-lg transition-all duration-300 ease-in-out cursor-pointer hover:-translate-y-1"
             >
               <div className="flex justify-between items-start mb-4">
                 <h3 className="font-semibold text-lg">{metric.title}</h3>
@@ -76,7 +93,34 @@ const MetricsDashboard = () => {
                   width="100%"
                   height="100%"
                 >
-                  <AreaChart data={metric.data}>
+                  <AreaChart
+                    data={metric.data}
+                    margin={{ top: 10, right: 10, left: 10, bottom: 10 }}
+                  >
+                    {/* Add grid lines */}
+                    <CartesianGrid
+                      stroke="#eee"
+                      strokeDasharray="3 3"
+                    />
+
+                    {/* Add X and Y axes */}
+                    <XAxis
+                      dataKey="date"
+                      tick={{ fontSize: 12 }}
+                    />
+                    <YAxis tick={{ fontSize: 12 }} />
+
+                    {/* Add tooltip */}
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: "#fff",
+                        border: "1px solid #ddd",
+                        borderRadius: "4px",
+                        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                      }}
+                    />
+
+                    {/* Add gradient fill */}
                     <defs>
                       <linearGradient
                         id={`gradient-${index}`}
@@ -88,7 +132,7 @@ const MetricsDashboard = () => {
                         <stop
                           offset="0%"
                           stopColor={metric.color}
-                          stopOpacity={0.2}
+                          stopOpacity={0.4}
                         />
                         <stop
                           offset="100%"
@@ -97,12 +141,14 @@ const MetricsDashboard = () => {
                         />
                       </linearGradient>
                     </defs>
+
+                    {/* Add area chart */}
                     <Area
                       type="monotone"
                       dataKey="value"
                       stroke={metric.color}
-                      fill={`url(#gradient-${index})`}
                       strokeWidth={2}
+                      fill={`url(#gradient-${index})`}
                     />
                   </AreaChart>
                 </ResponsiveContainer>
@@ -119,13 +165,14 @@ const MetricsDashboard = () => {
         </div>
 
         <div className="text-center">
-          <button className="inline-flex items-center text-violet-600 hover:text-violet-700 font-medium">
+          <button className="inline-flex items-center text-violet-600 hover:text-violet-700 font-medium transition-colors duration-300 ease-in-out">
             View Detailed Analytics
-            <ArrowRight className="ml-2 w-4 h-4" />
+            <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-300 ease-in-out group-hover:translate-x-1" />
           </button>
         </div>
       </div>
     </div>
   );
 };
+
 export default MetricsDashboard;

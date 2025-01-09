@@ -49,7 +49,7 @@ const AnalyticsFeaturesSection = () => {
   ];
 
   return (
-    <div className="w-full px-4 py-16 bg-gray-50">
+    <div id="features" className="w-full px-4 py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4">

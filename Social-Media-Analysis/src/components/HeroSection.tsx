@@ -3,7 +3,15 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 
-const MetricCard = ({
+interface MetricCardProps {
+  title: string;
+  value: string | number;
+  change: string | number;
+  date?: string;
+  isPercentage?: boolean;
+}
+
+const MetricCard: React.FC<MetricCardProps> = ({
   title,
   value,
   change,
@@ -34,7 +42,7 @@ const HeroSection = () => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative bg-gradient-to-br from-black to-zinc-900">
       <div className="max-w-7xl mx-auto px-8 py-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
@@ -42,19 +50,19 @@ const HeroSection = () => {
               Level Up Your <span className="text-purple-500">Instagram</span>{" "}
               Analytics Game
             </h1>
-            <p className="text-zinc-400 text-xl">
+            <p className="text-zinc-400 text-xl mt-4">
               Get detailed insights, track growth metrics, and optimize your
               Instagram performance with powerful analytics tools built for
               creators.
             </p>
             <div className="flex flex-wrap gap-4">
               <button
-                className="bg-purple-600 text-white px-6 py-3 rounded-lg text-lg font-medium hover:bg-purple-700 transition"
+                className="bg-purple-600 text-white px-6 py-3 rounded-lg text-lg font-medium hover:bg-purple-700 hover:shadow-lg hover:shadow-purple-500/20 transition-all duration-300 ease-in-out transform hover:scale-105"
                 onClick={handleStartAnalysis}
               >
-                Start Free Analysis
+                Start Analysis
               </button>
-              <button className="border border-purple-600 text-white px-6 py-3 rounded-lg text-lg font-medium hover:bg-purple-600/10 transition">
+              <button className="border border-purple-600 text-white px-6 py-3 rounded-lg text-lg font-medium hover:bg-purple-600/10 hover:shadow-lg hover:shadow-purple-500/20 transition-all duration-300 ease-in-out transform hover:scale-105">
                 Watch Demo
               </button>
             </div>
@@ -91,6 +99,7 @@ const HeroSection = () => {
               title="Best Time"
               value="9 PM"
               date="Thu"
+              change={""}
             />
           </div>
         </div>

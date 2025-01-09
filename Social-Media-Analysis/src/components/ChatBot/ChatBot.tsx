@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Send, Loader2, MessageSquare, X } from 'lucide-react';
 
@@ -12,28 +12,23 @@ interface ChatbotProps {
   apiUrl: string;
   position?: 'bottom-right' | 'bottom-left';
   title?: string;
+  isOpen: boolean; // Add this prop
+  onClose: () => void; // Add this prop
 }
-
-
-// how to use this component
-// <AiChatbot
-//   websocketUrl="ws://localhost:3000"
-//   apiUrl="http://localhost:3000/chat"
-//   position="bottom-right"
-//   title="Name of our AI Assistant"
-// />
 
 export const AiChatbot: React.FC<ChatbotProps> = ({
   websocketUrl,
   apiUrl,
   position = 'bottom-right',
-  title = 'AI Assistant'
+  title = 'AI Assistant',
+  isOpen, // Receive isOpen from parent
+  onClose, // Receive onClose from parent
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [requestId, setRequestId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -88,6 +83,7 @@ export const AiChatbot: React.FC<ChatbotProps> = ({
 
       if (!response.ok) throw new Error("Failed to send message");
       setInputMessage("");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError(err.message);
       setIsLoading(false);
@@ -105,7 +101,7 @@ export const AiChatbot: React.FC<ChatbotProps> = ({
     <>
       {/* Chat Toggle Button */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => onClose()} // Use onClose from props
         className={`fixed ${
           position === 'bottom-right' ? 'right-4' : 'left-4'
         } bottom-4 p-4 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 z-50`}
@@ -125,7 +121,7 @@ export const AiChatbot: React.FC<ChatbotProps> = ({
         <div className="flex items-center justify-between p-4 border-b">
           <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
           <button
-            onClick={() => setIsOpen(false)}
+            onClick={onClose} // Use onClose from props
             className="p-1 hover:bg-gray-100 rounded-full transition-colors"
           >
             <X size={20} />

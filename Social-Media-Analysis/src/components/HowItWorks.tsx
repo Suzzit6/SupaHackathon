@@ -5,12 +5,16 @@ import {
   Shield,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation"; // Import useRouter
+
 const HowItWorks = () => {
+  const router = useRouter(); // Initialize the router
+
   const steps = [
     {
       number: "1",
       title: "Connect Your Account",
-      description: "Securely link your Instagram account with just one click",
+      description: "Securely link your account with just one click",
       icon: <Lock className="w-6 h-6 text-violet-400" />,
       feature: "Secure OAuth 2.0",
     },
@@ -30,8 +34,13 @@ const HowItWorks = () => {
     },
   ];
 
+  // Function to handle navigation to the dashboard
+  const handleGetStarted = () => {
+    router.push("/dashboard"); // Navigate to the dashboard page
+  };
+
   return (
-    <div className="w-full bg-black py-16 px-4">
+    <div id="how-it-works" className="w-full bg-black py-16 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-white mb-4">How It Works</h2>
@@ -46,7 +55,7 @@ const HowItWorks = () => {
               key={index}
               className="relative"
             >
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
                 <div className="w-10 h-10 bg-violet-600 rounded-full flex items-center justify-center">
                   <span className="text-white font-semibold">
                     {step.number}
@@ -54,7 +63,7 @@ const HowItWorks = () => {
                 </div>
               </div>
 
-              <div className="bg-zinc-900 rounded-lg p-6 pt-10 h-full">
+              <div className="bg-gradient-to-br from-zinc-900 to-zinc-800 rounded-lg p-6 pt-10 h-full hover:shadow-lg hover:shadow-violet-500/20 transition-all duration-300 ease-in-out cursor-pointer hover:-translate-y-1">
                 <div className="text-center mb-6">
                   <h3 className="text-xl font-semibold text-white mb-2">
                     {step.title}
@@ -72,7 +81,10 @@ const HowItWorks = () => {
         </div>
 
         <div className="text-center">
-          <Button className="bg-violet-600 hover:bg-violet-700 text-white px-8 py-2 rounded-full">
+          <Button
+            className="bg-violet-600 hover:bg-violet-700 text-white px-8 py-2 rounded-full transition-colors duration-300 ease-in-out"
+            onClick={handleGetStarted} // Add onClick handler
+          >
             Get Started Now
           </Button>
         </div>
@@ -80,4 +92,5 @@ const HowItWorks = () => {
     </div>
   );
 };
+
 export default HowItWorks;
