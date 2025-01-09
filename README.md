@@ -85,7 +85,7 @@ Our AI chatbot, built using **LangFlow** and **Cohere**, helps users interpret t
    ```
 2. Install dependencies for the frontend:
    ```bash
-   cd frontend
+   cd Social-Media-Analysis
    npm install
    ```
 3. Set up Astra DB and populate it with mock data:
