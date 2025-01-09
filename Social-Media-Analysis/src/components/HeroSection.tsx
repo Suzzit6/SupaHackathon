@@ -41,6 +41,11 @@ const HeroSection = () => {
     router.push("/dashboard"); // Navigate to the new dashboard page
   };
 
+  const handleWatchDemo = () => {
+    // Open the YouTube link in a new tab
+    window.open("https://youtu.be/7-7wMHZOAyA", "_blank");
+  };
+
   return (
     <div className="relative bg-gradient-to-br from-black to-zinc-900">
       <div className="max-w-7xl mx-auto px-8 py-24">
@@ -62,7 +67,10 @@ const HeroSection = () => {
               >
                 Start Analysis
               </button>
-              <button className="border border-purple-600 text-white px-6 py-3 rounded-lg text-lg font-medium hover:bg-purple-600/10 hover:shadow-lg hover:shadow-purple-500/20 transition-all duration-300 ease-in-out transform hover:scale-105">
+              <button
+                className="border border-purple-600 text-white px-6 py-3 rounded-lg text-lg font-medium hover:bg-purple-600/10 hover:shadow-lg hover:shadow-purple-500/20 transition-all duration-300 ease-in-out transform hover:scale-105"
+                onClick={handleWatchDemo} // Add onClick handler for Watch Demo
+              >
                 Watch Demo
               </button>
             </div>
