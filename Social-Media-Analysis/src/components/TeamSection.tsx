@@ -75,8 +75,12 @@ const TeamMember: React.FC<TeamMemberProps> = ({
     </div>
   </div>
 );
-
-const TeamSection = () => {
+interface TeamSectionProps {
+    id?: string; // Add id prop
+  }
+  
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const TeamSection: React.FC<TeamSectionProps> = ({ id }) => {
   const teamMembers = [
     {
       name: "Moinuddin Quazi",

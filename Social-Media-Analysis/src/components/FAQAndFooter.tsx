@@ -6,7 +6,12 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Twitter, Github, Linkedin } from "lucide-react";
-const FAQAndFooter = () => {
+interface FAQAndFooterProps {
+  id?: string; // Add id prop
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const FAQAndFooter: React.FC<FAQAndFooterProps> = ({ id }) => {
   const faqData = [
     {
       question: "How does SocialStats access my Instagram data?",

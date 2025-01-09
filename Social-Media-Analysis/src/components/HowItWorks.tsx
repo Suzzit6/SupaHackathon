@@ -7,7 +7,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation"; // Import useRouter
 
-const HowItWorks = () => {
+interface HowItWorksProps {
+  id?: string; // Add id prop
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const HowItWorks: React.FC<HowItWorksProps> = ({ id }) => {
   const router = useRouter(); // Initialize the router
 
   const steps = [

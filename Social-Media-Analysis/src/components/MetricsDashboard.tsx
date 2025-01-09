@@ -12,7 +12,12 @@ import {
 } from "recharts";
 import { ArrowRight } from "lucide-react";
 
-const MetricsDashboard = () => {
+interface MetricsDashboardProps {
+  id?: string; // Add id prop
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const MetricsDashboard: React.FC<MetricsDashboardProps> = ({ id }) => {
   // Generate realistic data
   const generateChartData = (baseValue = 50) => {
     return Array.from({ length: 30 }, (_, i) => {
