@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import {
   BarChart2,
   Users,
@@ -8,7 +8,15 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
-const AnalyticsFeaturesSection = () => {
+
+interface AnalyticsFeaturesSectionProps {
+  id?: string; // Add id prop
+}
+
+const AnalyticsFeaturesSection: React.FC<AnalyticsFeaturesSectionProps> = ({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  id,
+}) => {
   const features = [
     {
       icon: <BarChart2 className="w-6 h-6 text-violet-500" />,
@@ -49,7 +57,10 @@ const AnalyticsFeaturesSection = () => {
   ];
 
   return (
-    <div id="features" className="w-full px-4 py-16 bg-gray-50">
+    <div
+      id="features"
+      className="w-full px-4 py-16 bg-gray-50"
+    >
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4">

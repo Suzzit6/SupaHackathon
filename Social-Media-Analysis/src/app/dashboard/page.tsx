@@ -13,7 +13,14 @@ import { useState } from "react";
 import { AiChatbot } from "@/components/ChatBot/ChatBot";
 
 export default function DashboardPage() {
-  const [isChatbotOpen, setIsChatbotOpen] = useState(false); // State to control chatbot visibility
+  // State to manage chatbot visibility
+  const [isChatbotOpen, setIsChatbotOpen] = useState(false);
+
+  // Toggle function for chatbot
+  const toggleChatbot = () => {
+    console.log("Toggling chatbot"); // Debugging
+    setIsChatbotOpen((prev) => !prev);
+  };
 
   const metrics = [
     { title: "Total Reach", value: data[0].Overall_Reach, change: 12 },
@@ -99,7 +106,10 @@ export default function DashboardPage() {
 
   return (
     <div className="flex min-h-screen bg-gray-950">
-      <Sidebar onChatbotToggle={() => setIsChatbotOpen((prev) => !prev)} />
+      {/* Pass the toggle handler to Sidebar */}
+      <Sidebar onChatbotToggle={toggleChatbot} isOpen={false} onClose={function (): void {
+        throw new Error("Function not implemented.");
+      } } />
       <main className="flex-1 p-8">
         <div className="max-w-6xl mx-auto space-y-8">
           <div>
@@ -111,17 +121,11 @@ export default function DashboardPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {metrics.map((metric) => (
-              <MetricCard
-                key={metric.title}
-                {...metric}
-              />
+              <MetricCard key={metric.title} {...metric} />
             ))}
           </div>
 
-          <div
-            id="engagement"
-            className="grid grid-cols-1 lg:grid-cols-2 gap-4"
-          >
+          <div id="engagement" className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="rounded-lg bg-gray-900 border border-gray-800 p-6">
               <h3 className="text-lg font-semibold text-white mb-4">
                 Engagement Breakdown
@@ -171,7 +175,7 @@ export default function DashboardPage() {
         position="bottom-right"
         title="Name of our AI Assistant"
         isOpen={isChatbotOpen} // Pass the state
-        onClose={() => setIsChatbotOpen(false)} // Pass the close handler
+        onClose={toggleChatbot} // Use the same toggle function
       />
     </div>
   );

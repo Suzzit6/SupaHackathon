@@ -10,6 +10,24 @@ body {
   @apply text-gray-900 antialiased;
 }
 
+/* Add this to your global CSS file or a CSS module */
+@media (max-width: 768px) {
+  nav {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 64px; /* Adjust based on your header height */
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+  nav.open {
+    transform: translateX(0);
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
